@@ -1,9 +1,9 @@
-public import Affine_Discrete
 public import Bit
 public import Index
 public import Memory
 public import Memory_Allocator
 public import Memory_Pool
+public import Ratio
 
 extension Memory.Allocator where Resource: ~Copyable {
 
@@ -15,7 +15,7 @@ extension Memory.Allocator where Resource: ~Copyable {
 
         @usableFromInline internal var backing: Resource
 
-        @usableFromInline internal let _slotStride: Affine.Discrete.Ratio<Slot, Memory>
+        @usableFromInline internal let _slotStride: Ratio<Slot, Memory>
 
         @usableFromInline internal let _slotAlignment: Memory.Alignment
 
@@ -32,7 +32,7 @@ extension Memory.Allocator where Resource: ~Copyable {
         @usableFromInline
         internal init(
             adopting backing: consuming Resource,
-            slotStride: Affine.Discrete.Ratio<Slot, Memory>,
+            slotStride: Ratio<Slot, Memory>,
             slotAlignment: Memory.Alignment,
             capacity: Memory.Pool.Count,
             allocated: Memory.Pool.Count,

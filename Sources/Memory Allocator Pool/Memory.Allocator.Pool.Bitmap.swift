@@ -4,7 +4,6 @@ public import Index
 public import Memory
 public import Memory_Allocator
 public import Ordinal
-public import Ordinal_Protocol
 public import Tagged
 
 @frozen

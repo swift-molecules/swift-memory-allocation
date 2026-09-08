@@ -1,21 +1,14 @@
 public import Cardinal
-public import Cardinal_Carrier
-public import Cardinal_Tagged
 public import Memory_Pool
 public import Ordinal
-public import Ordinal_Cardinal
-public import Ordinal_Protocol
-public import Ordinal_Tagged
 public import Tagged
-public import Tagged_Carrier
-public import Affine_Discrete
-public import Affine_Quotient
-public import Affine_Tagged
+public import Carrier
 public import Bit
+public import Difference_Ratio
 public import Index
 public import Memory
 public import Memory_Allocator
-public import Memory_Standard_Library_Integration
+public import Ratio
 
 extension Memory.Allocator.Pool where Resource: ~Copyable {
 
@@ -30,7 +23,9 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
             throw .slotSizeTooSmall(requested: slotSize, minimum: minimumSlotSize)
         }
 
-        let slotStride = Affine.Discrete.Ratio<Slot, Memory>(Int(bitPattern: slotAlignment.alignUp(slotSize.underlying.rawValue)))
+        let slotStride = try! Ratio<Slot, Memory>(
+            numerator: UInt128(slotAlignment.alignUp(slotSize.underlying.rawValue))
+        )
 
         let (capacity, _) = try! slotStride.quotientAndRemainder(dividing: backing.capacity)
         guard capacity > .zero else {
@@ -59,7 +54,7 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
     package func _pointer(at index: Index<Slot>) -> UnsafeMutableRawPointer {
 
         unsafe _base.mutablePointer.advanced(
-            by: (Index<Slot>.Offset(fromZero: index) * _slotStride).underlying.rawValue
+            by: try! (Index<Slot>.Offset(fromZero: index) * _slotStride).underlying.intValue()
         )
     }
 

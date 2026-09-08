@@ -38,14 +38,40 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-atoms/swift-cardinal.git", branch: "main"),
-        .package(url: "https://github.com/swift-atoms/swift-memory.git", branch: "main"),
-        .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
-        .package(url: "https://github.com/swift-atoms/swift-index.git", branch: "main"),
-        .package(url: "https://github.com/swift-atoms/swift-affine.git", branch: "main"),
-        .package(url: "https://github.com/swift-atoms/swift-bit.git", branch: "main"),
-        .package(url: "https://github.com/swift-molecules/swift-tagged-carrier.git", branch: "main"),
-        .package(url: "https://github.com/swift-atoms/swift-ordinal.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-carrier.git", branch: "main"),
+
+        .package(
+            url: "https://github.com/swift-atoms/swift-cardinal.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-memory.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-tagged.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-index.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-ratio.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-difference-ratio.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-bit.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-ordinal.git",
+            branch: "main"
+        ),
             ],
     targets: [
         .target(
@@ -66,28 +92,23 @@ let package = Package(
         .target(
             name: "Memory Allocator Pool",
             dependencies: [
+                .product(name: "Carrier", package: "swift-carrier"),
+
                 .target(name: "Memory Allocator"),
                 .target(name: "Memory Allocator Protocol"),
                 .target(name: "Memory Pool"),
                 .product(name: "Memory", package: "swift-memory"),
                 .product(
-                    name: "Memory Standard Library Integration",
+                    name: "Memory",
                     package: "swift-memory"
                 ),
                 .product(name: "Index", package: "swift-index"),
-                .product(name: "Affine Discrete", package: "swift-affine"),
-                .product(name: "Affine Quotient", package: "swift-affine"),
-                .product(name: "Affine Tagged", package: "swift-affine"),
-                .product(name: "Ordinal Cardinal", package: "swift-ordinal"),
-                .product(name: "Ordinal Tagged", package: "swift-ordinal"),
-                .product(name: "Tagged Carrier", package: "swift-tagged-carrier"),
-                .product(name: "Bit", package: "swift-bit"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
-                .product(name: "Cardinal Tagged", package: "swift-cardinal"),
-                .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Tagged", package: "swift-tagged"),
+                .product(name: "Ratio", package: "swift-ratio"),
+                .product(name: "Difference Ratio", package: "swift-difference-ratio"),
                 .product(name: "Ordinal", package: "swift-ordinal"),
-                .product(name: "Ordinal Protocol", package: "swift-ordinal"),
+                .product(name: "Tagged", package: "swift-tagged"),
+                .product(name: "Bit", package: "swift-bit"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
             ]
         ),
         .target(
@@ -124,10 +145,9 @@ let package = Package(
                 .target(name: "Memory Allocator Protocol"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(
-                    name: "Cardinal Standard Library Integration",
+                    name: "Cardinal",
                     package: "swift-cardinal"
                 ),
-                .product(name: "Cardinal Tagged", package: "swift-cardinal"),
                 .product(name: "Memory", package: "swift-memory"),
                 .product(name: "Tagged", package: "swift-tagged"),
             ]
