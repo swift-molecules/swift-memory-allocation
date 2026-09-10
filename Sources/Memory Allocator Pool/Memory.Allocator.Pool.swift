@@ -1,4 +1,4 @@
-public import Bit
+import Bit
 public import Index
 public import Memory
 public import Memory_Allocator

@@ -1,8 +1,8 @@
 public import Bit
 public import Cardinal
 public import Index
-public import Memory
-public import Memory_Allocator
+import Memory
+import Memory_Allocator
 public import Ordinal
 public import Tagged
 

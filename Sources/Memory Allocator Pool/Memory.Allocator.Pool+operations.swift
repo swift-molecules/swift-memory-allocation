@@ -2,7 +2,7 @@ public import Cardinal
 public import Memory_Pool
 public import Ordinal
 public import Tagged
-public import Carrier
+import Carrier
 public import Bit
 public import Difference_Ratio
 public import Index
