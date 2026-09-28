@@ -4,11 +4,13 @@ public import Ordinal
 public import Tagged
 import Carrier
 public import Bit
-public import Difference_Ratio
+public import Ratio
+public import Carrier
+public import Difference
+public import Property
 public import Index
 public import Memory
 public import Memory_Allocator
-public import Ratio
 
 extension Memory.Allocator.Pool where Resource: ~Copyable {
 
