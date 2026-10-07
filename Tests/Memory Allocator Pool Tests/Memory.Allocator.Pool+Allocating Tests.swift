@@ -6,10 +6,7 @@ import Tagged
 import Testing
 
 extension Memory.Pool {
-    @Suite struct Test {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-    }
+    @Suite struct Test {}
 }
 
 extension Memory.Pool.Test {
@@ -23,7 +20,7 @@ extension Memory.Pool.Test {
     }
 }
 
-extension Memory.Pool.Test.Unit {
+extension Memory.Pool.Test {
 
     @Test func `a request smaller than the slot is served`() throws {
         var pool = try Memory.Pool.Test.pool()
@@ -56,7 +53,7 @@ extension Memory.Pool.Test.Unit {
     }
 }
 
-extension Memory.Pool.Test.`Edge Case` {
+extension Memory.Pool.Test {
 
     @Test func `a request larger than the slot is rejected without consuming a slot`() throws {
         var pool = try Memory.Pool.Test.pool()
