@@ -239,6 +239,16 @@ let package = Package(
             path: "Tests/Support"
         ),
         .testTarget(
+            name: "Memory Allocator Pool Tests",
+            dependencies: [
+                .target(name: "Memory Allocator Pool"),
+                .target(name: "Memory Allocator Protocol"),
+                .target(name: "Memory Pool"),
+                .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Tagged", package: "swift-tagged"),
+            ]
+        ),
+        .testTarget(
             name: "Memory Allocation Tests",
             dependencies: [
                 .target(name: "Memory Allocator"),

@@ -17,6 +17,10 @@ extension Memory {
 
             case slotSizeTooSmall(requested: Memory.Address.Count, minimum: Memory.Address.Count)
 
+            case requestExceedsSlot(requested: Memory.Address.Count, slot: Memory.Address.Count)
+
+            case alignmentExceedsSlot(requested: Memory.Alignment, slot: Memory.Alignment)
+
             case invalidCapacity
 
             case foreignPointer
