@@ -84,7 +84,7 @@
             var region = try Memory.Aligned.zeroed(
                 byteCount: 4,
                 alignment: try Memory.Alignment(8),
-                growthPolicy: .custom { _ in .one }
+                growthPolicy: .custom { _ throws(Growth.Policy<Byte>.Error) in .one }
             )
             unsafe region.withUnsafeMutableBytes { bytes in
                 for i in 0..<4 { unsafe bytes[i] = UInt8(i + 5) }
