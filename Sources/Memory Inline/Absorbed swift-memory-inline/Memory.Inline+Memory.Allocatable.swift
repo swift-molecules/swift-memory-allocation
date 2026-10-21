@@ -1,5 +1,5 @@
 #if MemoryInline
-public import Memory_Allocator_Protocol
+    public import Memory_Allocator_Protocol
 
-extension Memory.Inline: Memory.Allocatable {}
+    extension Memory.Inline: Memory.Allocatable {}
 #endif

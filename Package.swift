@@ -72,7 +72,9 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/swift-atoms/swift-ratio.git",
-            branch: "main", traits: ["Difference"]),
+            branch: "main",
+            traits: ["Difference"]
+        ),
         .package(
             url: "https://github.com/swift-atoms/swift-bit.git",
             branch: "main"
@@ -176,7 +178,7 @@ let package = Package(
         .target(
             name: "Memory Allocator",
             dependencies: [
-                .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Memory", package: "swift-memory")
             ]
         ),
         .target(

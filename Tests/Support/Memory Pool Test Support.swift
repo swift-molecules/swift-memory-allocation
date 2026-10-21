@@ -1,7 +1,7 @@
-public import Memory
-public import Memory_Pool
 internal import Cardinal
 import Index
+public import Memory
+public import Memory_Pool
 internal import Tagged
 
 extension Memory.Pool {
@@ -44,7 +44,8 @@ extension Memory.Pool {
             }
             for i in addresses.indices {
                 for j in addresses.indices where i < j {
-                    let distance = addresses[i] > addresses[j]
+                    let distance =
+                        addresses[i] > addresses[j]
                         ? addresses[i] - addresses[j]
                         : addresses[j] - addresses[i]
                     if distance < MemoryLayout<Int>.stride {

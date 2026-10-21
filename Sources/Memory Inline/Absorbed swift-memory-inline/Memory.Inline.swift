@@ -1,29 +1,29 @@
 #if MemoryInline
-public import Memory
+    public import Memory
 
-extension Memory {
+    extension Memory {
 
-    public struct Inline<let n: Int>: ~Copyable {
+        public struct Inline<let n: Int>: ~Copyable {
 
-        @usableFromInline
-        package var _deinitWorkaround: AnyObject? = nil
+            @usableFromInline
+            package var _deinitWorkaround: AnyObject? = nil
 
-        @_rawLayout(likeArrayOf: UInt8, count: n)
-        @usableFromInline
-        package struct _Raw: ~Copyable {
-            @inlinable package init() {}
-        }
+            @_rawLayout(likeArrayOf: UInt8, count: n)
+            @usableFromInline
+            package struct _Raw: ~Copyable {
+                @inlinable package init() {}
+            }
 
-        @usableFromInline
-        package var _storage: _Raw
+            @usableFromInline
+            package var _storage: _Raw
 
-        @inlinable
-        public init() {
-            self._deinitWorkaround = nil
-            self._storage = _Raw()
+            @inlinable
+            public init() {
+                self._deinitWorkaround = nil
+                self._storage = _Raw()
+            }
         }
     }
-}
 
-extension Memory.Inline: @unchecked Sendable {}
+    extension Memory.Inline: @unchecked Sendable {}
 #endif

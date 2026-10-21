@@ -1,16 +1,16 @@
-public import Cardinal
-public import Memory_Pool
-public import Ordinal
-public import Tagged
-import Carrier
 public import Bit
-public import Ratio
+public import Cardinal
+import Carrier
 public import Carrier
 public import Difference
-public import Property
 public import Index
 public import Memory
 public import Memory_Allocator
+public import Memory_Pool
+public import Ordinal
+public import Property
+public import Ratio
+public import Tagged
 
 extension Memory.Allocator.Pool where Resource: ~Copyable {
 
@@ -25,11 +25,24 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
             throw .slotSizeTooSmall(requested: slotSize, minimum: minimumSlotSize)
         }
 
-        let slotStride = try! Ratio<Slot, Memory>(
-            numerator: UInt128(slotAlignment.alignUp(slotSize.underlying.rawValue))
-        )
+        let slotStride = {
+            do {
+                return try Ratio<Slot, Memory>(
+                    numerator: UInt128(slotAlignment.alignUp(slotSize.underlying.rawValue))
+                )
+            } catch {
+                preconditionFailure("A slot stride at least the minimum slot size is a valid ratio: \(error)")
+            }
+        }()
 
-        let (capacity, _) = try! slotStride.quotientAndRemainder(dividing: backing.capacity)
+        let backingCapacity = backing.capacity
+        let (capacity, _) = {
+            do {
+                return try slotStride.quotientAndRemainder(dividing: backingCapacity)
+            } catch {
+                preconditionFailure("A nonzero slot stride divides the backing capacity: \(error)")
+            }
+        }()
         guard capacity > .zero else {
             throw .invalidCapacity
         }
@@ -55,9 +68,15 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
     @inlinable
     package func _pointer(at index: Index<Slot>) -> UnsafeMutableRawPointer {
 
-        unsafe _base.mutablePointer.advanced(
-            by: try! (Index<Slot>.Offset(fromZero: index) * _slotStride).underlying.intValue()
-        )
+        let slotStride = _slotStride
+        let byteOffset = {
+            do {
+                return try (Index<Slot>.Offset(fromZero: index) * slotStride).underlying.intValue()
+            } catch {
+                preconditionFailure("A slot offset is representable as Int: \(error)")
+            }
+        }()
+        return unsafe _base.mutablePointer.advanced(by: byteOffset)
     }
 
     @inlinable
@@ -164,7 +183,14 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
         let byteCount = Memory.Address.Count(UInt(rawOffset))
         guard byteCount < _capacity * _slotStride else { return nil }
 
-        let (slotCount, remainder) = try! _slotStride.quotientAndRemainder(dividing: byteCount)
+        let slotStride = _slotStride
+        let (slotCount, remainder) = {
+            do {
+                return try slotStride.quotientAndRemainder(dividing: byteCount)
+            } catch {
+                preconditionFailure("A nonzero slot stride divides a byte count: \(error)")
+            }
+        }()
         guard remainder == .zero else { return nil }
 
         return slotCount.map(Ordinal.init)

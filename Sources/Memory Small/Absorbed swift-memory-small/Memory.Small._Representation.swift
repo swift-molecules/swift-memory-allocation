@@ -1,16 +1,16 @@
 #if MemorySmall
-public import Memory
-public import Memory_Inline
+    public import Memory
+    public import Memory_Inline
 
-extension Memory.Small {
+    extension Memory.Small {
 
-    @frozen
-    @usableFromInline
-    package enum _Representation: ~Copyable {
+        @frozen
+        @usableFromInline
+        package enum _Representation: ~Copyable {
 
-        case inline(Memory.Inline<inlineCapacity>)
+            case inline(Memory.Inline<inlineCapacity>)
 
-        case heap(Memory.Heap)
+            case heap(Memory.Heap)
+        }
     }
-}
 #endif

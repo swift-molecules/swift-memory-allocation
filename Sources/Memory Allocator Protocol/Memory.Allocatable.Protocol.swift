@@ -1,5 +1,5 @@
-public import Memory_Allocator
 public import Memory
+public import Memory_Allocator
 
 public protocol __MemoryAllocatableProtocol: Memory.Region, ~Copyable {
 

@@ -1,5 +1,4 @@
 import Cardinal
-import Cardinal
 import Memory
 import Memory_Allocator_Protocol
 import Testing
