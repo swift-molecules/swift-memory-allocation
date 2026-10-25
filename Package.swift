@@ -199,10 +199,6 @@ let package = Package(
                 .target(name: "Memory Allocator Protocol"),
                 .target(name: "Memory Pool"),
                 .product(name: "Memory", package: "swift-memory"),
-                .product(
-                    name: "Memory",
-                    package: "swift-memory"
-                ),
                 .product(name: "Index", package: "swift-index"),
                 .product(name: "Ratio", package: "swift-ratio"),
                 .product(name: "Ordinal", package: "swift-ordinal"),
@@ -256,10 +252,6 @@ let package = Package(
                 .target(name: "Memory Allocator"),
                 .target(name: "Memory Allocator Protocol"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(
-                    name: "Cardinal",
-                    package: "swift-cardinal"
-                ),
                 .product(name: "Memory", package: "swift-memory"),
                 .product(name: "Tagged", package: "swift-tagged"),
             ]
