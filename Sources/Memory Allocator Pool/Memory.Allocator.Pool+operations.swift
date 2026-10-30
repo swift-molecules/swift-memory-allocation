@@ -31,7 +31,7 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
                     numerator: UInt128(slotAlignment.alignUp(slotSize.underlying.rawValue))
                 )
             } catch {
-                preconditionFailure("A slot stride at least the minimum slot size is a valid ratio: \(error)")
+                preconditionFailure("A slot stride at least the minimum slot size is a valid ratio")
             }
         }()
 
@@ -40,7 +40,7 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
             do {
                 return try slotStride.quotientAndRemainder(dividing: backingCapacity)
             } catch {
-                preconditionFailure("A nonzero slot stride divides the backing capacity: \(error)")
+                preconditionFailure("A nonzero slot stride divides the backing capacity")
             }
         }()
         guard capacity > .zero else {
@@ -73,7 +73,7 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
             do {
                 return try (Index<Slot>.Offset(fromZero: index) * slotStride).underlying.intValue()
             } catch {
-                preconditionFailure("A slot offset is representable as Int: \(error)")
+                preconditionFailure("A slot offset is representable as Int")
             }
         }()
         return unsafe _base.mutablePointer.advanced(by: byteOffset)
@@ -188,7 +188,7 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
             do {
                 return try slotStride.quotientAndRemainder(dividing: byteCount)
             } catch {
-                preconditionFailure("A nonzero slot stride divides a byte count: \(error)")
+                preconditionFailure("A nonzero slot stride divides a byte count")
             }
         }()
         guard remainder == .zero else { return nil }
