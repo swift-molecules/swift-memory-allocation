@@ -1,14 +1,13 @@
 public import Bit
 public import Cardinal
 import Carrier
-public import Carrier
 public import Difference
 public import Index
 public import Memory
 public import Memory_Allocator
 public import Memory_Pool
 public import Ordinal
-public import Property
+import Property
 public import Ratio
 public import Tagged
 
