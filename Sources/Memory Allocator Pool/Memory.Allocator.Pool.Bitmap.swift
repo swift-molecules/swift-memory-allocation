@@ -19,6 +19,9 @@ internal struct _PoolBitmap {
         let count = (bits + UInt.bitWidth - 1) / UInt.bitWidth
         self.words = [UInt](repeating: 0, count: count)
     }
+}
+
+extension _PoolBitmap {
 
     @inlinable
     internal subscript(_ index: Index<Bit>) -> Bool {
