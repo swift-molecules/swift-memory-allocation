@@ -24,7 +24,7 @@
         func `zeroed buffer reads zero everywhere`() throws {
             let buffer = try Memory.Aligned.zeroed(byteCount: 16, alignment: try Memory.Alignment(16))
             unsafe buffer.withUnsafeBytes { bytes in
-                for b in unsafe bytes { #expect(b == 0) }
+                for unsafe b in unsafe bytes { #expect(b == 0) }
             }
         }
 

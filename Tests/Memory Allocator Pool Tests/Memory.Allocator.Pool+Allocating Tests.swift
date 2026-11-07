@@ -28,7 +28,7 @@ extension `Memory.Pool Tests`.Test {
         var pool = try `Memory.Pool Tests`.Test.pool()
         let address = try pool.allocate(count: Memory.Address.Count(UInt(16)), alignment: .`8`)
         #expect(pool.allocated == .one)
-        #expect(Memory.Alignment.`8`.isAligned(address.mutablePointer))
+        unsafe #expect(Memory.Alignment.`8`.isAligned(address.mutablePointer))
     }
 
     @Test func `a request of exactly the slot size is served`() throws {
@@ -41,7 +41,7 @@ extension `Memory.Pool Tests`.Test {
         var pool = try `Memory.Pool Tests`.Test.pool()
         let address = try pool.allocate(count: Memory.Address.Count(UInt(8)), alignment: .`4`)
         #expect(pool.allocated == .one)
-        #expect(Memory.Alignment.`4`.isAligned(address.mutablePointer))
+        unsafe #expect(Memory.Alignment.`4`.isAligned(address.mutablePointer))
     }
 
     @Test func `served requests stay distinct and return to the pool`() throws {
