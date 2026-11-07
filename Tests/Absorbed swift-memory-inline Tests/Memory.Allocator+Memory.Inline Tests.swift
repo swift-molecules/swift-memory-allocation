@@ -6,14 +6,18 @@
     import Tagged
     import Testing
 
-    @Suite(.serialized)
-    struct `Memory.Allocator Inline Backed Tests` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
-    }
+enum `Memory.Allocator+Memory.Inline Tests` {}
 
-    extension `Memory.Allocator Inline Backed Tests`.Integration {
+extension `Memory.Allocator+Memory.Inline Tests` {
+        @Suite(.serialized)
+        struct `Memory.Allocator Inline Backed Tests` {
+            @Suite struct Unit {}
+            @Suite struct `Edge Case` {}
+            @Suite struct Integration {}
+        }
+}
+
+    extension `Memory.Allocator+Memory.Inline Tests`.`Memory.Allocator Inline Backed Tests`.Integration {
         @Test func `arena over inline bumps and tears down`() throws {
             do {
                 var arena = Memory.Allocator<Memory.Inline<1024>>.Arena(Memory.Inline<1024>())
