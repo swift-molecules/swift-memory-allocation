@@ -4,28 +4,28 @@ public import Memory
 public import Tagged
 
 extension Memory {
+
     public enum Pool {
-    }
-}
 
-extension Memory.Pool {
-    public enum Slot {}
+        public enum Slot {}
 
-    public typealias Count = Tagged::Tagged<Slot, Cardinal::Cardinal>
+        public typealias Count = Tagged::Tagged<Slot, Cardinal::Cardinal>
 
-    public enum Error: Swift.Error, Equatable, Sendable {
-        case exhausted(capacity: Count)
+        public enum Error: Swift.Error, Equatable, Sendable {
 
-        case slotSizeTooSmall(requested: Memory.Address.Count, minimum: Memory.Address.Count)
+            case exhausted(capacity: Count)
 
-        case requestExceedsSlot(requested: Memory.Address.Count, slot: Memory.Address.Count)
+            case slotSizeTooSmall(requested: Memory.Address.Count, minimum: Memory.Address.Count)
 
-        case alignmentExceedsSlot(requested: Memory.Alignment, slot: Memory.Alignment)
+            case requestExceedsSlot(requested: Memory.Address.Count, slot: Memory.Address.Count)
 
-        case invalidCapacity
+            case alignmentExceedsSlot(requested: Memory.Alignment, slot: Memory.Alignment)
 
-        case foreignPointer
+            case invalidCapacity
 
-        case doubleFree
+            case foreignPointer
+
+            case doubleFree
+        }
     }
 }
