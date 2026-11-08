@@ -1,3 +1,3 @@
 #if MemorySmall
-    @_exported public import Memory
+    public import Memory
 #endif

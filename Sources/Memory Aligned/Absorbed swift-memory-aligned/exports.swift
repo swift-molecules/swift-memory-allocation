@@ -1,4 +1,4 @@
 #if MemoryAligned
-    @_exported public import Byte
-    @_exported public import Memory
+    public import Byte
+    public import Memory
 #endif
