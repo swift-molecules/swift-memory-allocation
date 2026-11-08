@@ -9,23 +9,8 @@ extension Memory {
 }
 
 extension Memory.Pool {
-    public enum Slot {}
+
 
     public typealias Count = Tagged::Tagged<Slot, Cardinal::Cardinal>
 
-    public enum Error: Swift.Error, Equatable, Sendable {
-        case exhausted(capacity: Count)
-
-        case slotSizeTooSmall(requested: Memory.Address.Count, minimum: Memory.Address.Count)
-
-        case requestExceedsSlot(requested: Memory.Address.Count, slot: Memory.Address.Count)
-
-        case alignmentExceedsSlot(requested: Memory.Alignment, slot: Memory.Alignment)
-
-        case invalidCapacity
-
-        case foreignPointer
-
-        case doubleFree
-    }
 }
