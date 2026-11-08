@@ -10,7 +10,6 @@ extension Memory {
 
 extension Memory.Pool {
 
-
     public typealias Count = Tagged::Tagged<Slot, Cardinal::Cardinal>
 
 }

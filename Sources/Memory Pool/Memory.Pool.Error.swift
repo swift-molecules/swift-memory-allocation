@@ -3,7 +3,6 @@ import Index
 public import Memory
 public import Tagged
 
-
 extension Memory.Pool {
     public enum Error: Swift.Error, Equatable, Sendable {
         case exhausted(capacity: Count)

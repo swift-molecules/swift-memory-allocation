@@ -4,9 +4,9 @@
 
     @testable import Memory_Allocator_Arena
 
-enum `Memory.Allocator.Arena Tests` {}
+    enum `Memory.Allocator.Arena Tests` {}
 
-extension `Memory.Allocator.Arena Tests` {
+    extension `Memory.Allocator.Arena Tests` {
         @Suite
         struct `Arena allocations preserve absolute alignment and capacity` {
             private struct OwnedSlice: Memory.Region, ~Copyable {
@@ -200,5 +200,5 @@ extension `Memory.Allocator.Arena Tests` {
                 #expect(arena.allocated == offset)
             }
         }
-}
+    }
 #endif

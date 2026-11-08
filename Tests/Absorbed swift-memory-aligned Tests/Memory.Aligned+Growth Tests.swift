@@ -4,9 +4,9 @@
     import Memory_Aligned_Test_Support
     import Testing
 
-enum `Memory.Aligned+Growth Tests` {}
+    enum `Memory.Aligned+Growth Tests` {}
 
-extension `Memory.Aligned+Growth Tests` {
+    extension `Memory.Aligned+Growth Tests` {
         @Suite
         struct `Memory aligned growth honors checked capacity policies` {
             @Test
@@ -143,5 +143,5 @@ extension `Memory.Aligned+Growth Tests` {
                 }
             }
         }
-}
+    }
 #endif
