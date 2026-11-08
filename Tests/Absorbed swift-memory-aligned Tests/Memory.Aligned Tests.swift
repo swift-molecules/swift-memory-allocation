@@ -32,7 +32,7 @@
         func `round-trips bytes through mutable access`() throws {
             var buffer = try Memory.Aligned(byteCount: 4, alignment: try Memory.Alignment(8))
             unsafe buffer.withUnsafeMutableBytes { bytes in
-                for i in 0..<4 { unsafe bytes[i] = UInt8(i + 1) }
+                (0..<4).forEach { i in unsafe bytes[i] = UInt8(i + 1) }
             }
             unsafe buffer.withUnsafeBytes { bytes in
                 #expect(unsafe bytes[3] == 4)

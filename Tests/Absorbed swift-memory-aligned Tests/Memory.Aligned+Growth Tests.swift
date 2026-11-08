@@ -33,12 +33,12 @@ extension `Memory.Aligned+Growth Tests` {
             func `preserves existing bytes across growth`() throws {
                 var region = try Memory.Aligned.zeroed(byteCount: 4, alignment: try Memory.Alignment(8))
                 unsafe region.withUnsafeMutableBytes { bytes in
-                    for i in 0..<4 { unsafe bytes[i] = UInt8(i + 1) }
+                    (0..<4).forEach { i in unsafe bytes[i] = UInt8(i + 1) }
                 }
                 try region.ensureCapacity(minimum: 32)
                 #expect(region.count >= Index<Byte>.Count(32))
                 unsafe region.withUnsafeBytes { bytes in
-                    for i in 0..<4 { #expect(unsafe bytes[i] == UInt8(i + 1)) }
+                    (0..<4).forEach { i in #expect(unsafe bytes[i] == UInt8(i + 1)) }
                 }
             }
 
@@ -58,7 +58,7 @@ extension `Memory.Aligned+Growth Tests` {
                     growthPolicy: policy
                 )
                 unsafe region.withUnsafeMutableBytes { bytes in
-                    for i in 0..<3 { unsafe bytes[i] = UInt8(i + 1) }
+                    (0..<3).forEach { i in unsafe bytes[i] = UInt8(i + 1) }
                 }
                 let address = unsafe region.withUnsafeBytes { bytes in
                     UInt(bitPattern: bytes.baseAddress)
@@ -78,7 +78,7 @@ extension `Memory.Aligned+Growth Tests` {
                 #expect(region.count == 3)
                 unsafe region.withUnsafeBytes { bytes in
                     #expect(UInt(bitPattern: bytes.baseAddress) == address)
-                    for i in 0..<3 { #expect(unsafe bytes[i] == UInt8(i + 1)) }
+                    (0..<3).forEach { i in #expect(unsafe bytes[i] == UInt8(i + 1)) }
                 }
             }
 
@@ -90,7 +90,7 @@ extension `Memory.Aligned+Growth Tests` {
                     growthPolicy: .custom { _ throws(Growth.Policy<Byte>.Error) in .one }
                 )
                 unsafe region.withUnsafeMutableBytes { bytes in
-                    for i in 0..<4 { unsafe bytes[i] = UInt8(i + 5) }
+                    (0..<4).forEach { i in unsafe bytes[i] = UInt8(i + 5) }
                 }
                 let address = unsafe region.withUnsafeBytes { bytes in
                     UInt(bitPattern: bytes.baseAddress)
@@ -110,7 +110,7 @@ extension `Memory.Aligned+Growth Tests` {
                 #expect(region.count == 4)
                 unsafe region.withUnsafeBytes { bytes in
                     #expect(UInt(bitPattern: bytes.baseAddress) == address)
-                    for i in 0..<4 { #expect(unsafe bytes[i] == UInt8(i + 5)) }
+                    (0..<4).forEach { i in #expect(unsafe bytes[i] == UInt8(i + 5)) }
                 }
             }
 
@@ -139,7 +139,7 @@ extension `Memory.Aligned+Growth Tests` {
                 #expect(region.count == 4)
                 unsafe region.withUnsafeBytes { bytes in
                     #expect(UInt(bitPattern: bytes.baseAddress) == address)
-                    for i in 0..<4 { #expect(unsafe bytes[i] == 0) }
+                    (0..<4).forEach { i in #expect(unsafe bytes[i] == 0) }
                 }
             }
         }
