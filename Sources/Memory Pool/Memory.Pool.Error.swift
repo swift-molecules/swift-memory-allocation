@@ -1,4 +1,4 @@
-public import Cardinal
+import Cardinal
 import Index
 public import Memory
 public import Tagged
