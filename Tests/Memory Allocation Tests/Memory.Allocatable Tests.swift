@@ -51,3 +51,37 @@ extension `Memory.Allocatable Surface Tests`.Unit {
         #expect(allocator.base == allocator.base)
     }
 }
+
+extension `Memory.Allocatable Surface Tests` {
+    @safe
+    struct Offset: Memory.Allocatable, ~Copyable {
+        let pointer: UnsafeMutableRawPointer
+
+        init() {
+            unsafe self.pointer = UnsafeMutableRawPointer.allocate(byteCount: 64, alignment: 16)
+        }
+
+        var base: Memory.Address { unsafe Memory.Address(pointer.advanced(by: 1)) }
+        var capacity: Memory.Address.Count { Memory.Address.Count(UInt(63)) }
+
+        deinit { unsafe pointer.deallocate() }
+    }
+}
+
+extension `Memory.Allocatable Surface Tests`.`Edge Case` {
+    @Test func `passthrough serves an alignment the base satisfies`() {
+        var allocator = `Memory.Allocatable Surface Tests`.Region(
+            byteCount: Memory.Address.Count(UInt(64)),
+            alignment: .`16`
+        ).makeAllocator()
+        let address = allocator.allocate(count: Memory.Address.Count(UInt(32)), alignment: .`16`)
+        #expect(Memory.Alignment.`16`.isAligned(address.bitPattern))
+    }
+
+    @Test func `passthrough traps when the base does not satisfy the requested alignment`() async {
+        await #expect(processExitsWith: .failure) {
+            var allocator = `Memory.Allocatable Surface Tests`.Offset().makeAllocator()
+            _ = allocator.allocate(count: Memory.Address.Count(UInt(8)), alignment: .`8`)
+        }
+    }
+}

@@ -16,6 +16,10 @@ extension Memory.Allocator: __MemoryAllocatorProtocol where Resource: ~Copyable 
             count <= capacity,
             "passthrough allocator: requested byte count exceeds the adopted region's capacity"
         )
+        precondition(
+            alignment.isAligned(base.bitPattern),
+            "passthrough allocator: the adopted region's base does not satisfy the requested alignment"
+        )
         return base
     }
 
