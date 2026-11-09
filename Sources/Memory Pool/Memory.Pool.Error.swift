@@ -15,6 +15,8 @@ extension Memory.Pool {
 
         case invalidCapacity
 
+        case backingMisaligned(required: Memory.Alignment)
+
         case foreignPointer
 
         case doubleFree

@@ -23,6 +23,9 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
         guard slotSize >= minimumSlotSize else {
             throw .slotSizeTooSmall(requested: slotSize, minimum: minimumSlotSize)
         }
+        guard slotAlignment.isAligned(backing.base.bitPattern) else {
+            throw .backingMisaligned(required: slotAlignment)
+        }
 
         let slotStride = {
             do {

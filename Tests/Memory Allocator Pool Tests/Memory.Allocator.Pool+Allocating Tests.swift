@@ -95,3 +95,40 @@ extension `Memory.Pool Tests`.Test {
         #expect(pool.allocated == .one)
     }
 }
+
+extension `Memory.Pool Tests`.Test {
+
+    @safe
+    struct Offset: Memory.Region, ~Copyable {
+        let pointer: UnsafeMutableRawPointer
+
+        init() {
+            unsafe self.pointer = UnsafeMutableRawPointer.allocate(byteCount: 256, alignment: 16)
+        }
+
+        var base: Memory.Address { unsafe Memory.Address(pointer.advanced(by: 4)) }
+        var capacity: Memory.Address.Count { Memory.Address.Count(UInt(252)) }
+
+        deinit { unsafe pointer.deallocate() }
+    }
+
+    @Test func `a backing whose base is not aligned to the slot alignment is rejected`() {
+        #expect(throws: Memory.Pool.Error.backingMisaligned(required: .`8`)) {
+            _ = try Memory.Allocator<Offset>.Pool(
+                carving: Offset(),
+                slotSize: Memory.Address.Count(UInt(24)),
+                slotAlignment: .`8`
+            )
+        }
+    }
+
+    @Test func `a backing aligned to the slot alignment carves aligned slots`() throws {
+        var pool = try Memory.Allocator<Offset>.Pool(
+            carving: Offset(),
+            slotSize: Memory.Address.Count(UInt(24)),
+            slotAlignment: .`4`
+        )
+        let address = try pool.allocate(count: Memory.Address.Count(UInt(24)), alignment: .`4`)
+        #expect(Memory.Alignment.`4`.isAligned(address.bitPattern))
+    }
+}
