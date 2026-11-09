@@ -122,6 +122,7 @@ let package = Package(
                 .product(name: "Cardinal", package: "swift-cardinal", condition: .when(traits: ["MemorySmall"])),
                 .product(name: "Memory", package: "swift-memory", condition: .when(traits: ["MemorySmall"])),
                 .product(name: "Tagged", package: "swift-tagged", condition: .when(traits: ["MemorySmall"])),
+                .target(name: "Memory Inline", condition: .when(traits: ["MemorySmall"])),
                 .target(name: "Memory Small", condition: .when(traits: ["MemorySmall"])),
             ],
             path: "Tests/Absorbed swift-memory-small Tests"

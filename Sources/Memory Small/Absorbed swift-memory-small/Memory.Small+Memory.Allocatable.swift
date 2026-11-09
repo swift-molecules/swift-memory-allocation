@@ -10,7 +10,9 @@
         @inlinable
         public init(byteCount: Memory.Address.Count, alignment: Memory.Alignment) {
             let inlineBudget = Memory.Address.Count(UInt(inlineCapacity))
-            if byteCount.underlying.rawValue <= inlineBudget.underlying.rawValue {
+            let fitsInline = byteCount.underlying.rawValue <= inlineBudget.underlying.rawValue
+            let alignedInline = alignment.shift <= Memory.Inline<inlineCapacity>._alignment.shift
+            if fitsInline && alignedInline {
                 self.init(_storage: .inline(Memory.Inline<inlineCapacity>()))
             } else {
                 self.init(_storage: .heap(Memory.Heap(byteCount: byteCount, alignment: alignment)))

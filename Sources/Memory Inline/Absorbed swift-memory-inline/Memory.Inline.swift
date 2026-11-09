@@ -25,5 +25,20 @@
         }
     }
 
+    extension Memory.Inline {
+
+        // `_storage` is laid out like a byte array, but it follows the pointer-sized
+        // `_deinitWorkaround` field, so it sits at a pointer-aligned offset inside a
+        // pointer-aligned value: every `base` is aligned to a pointer.
+        @inlinable
+        package static var _alignment: Memory.Alignment {
+            do {
+                return try Memory.Alignment(MemoryLayout<AnyObject?>.alignment)
+            } catch {
+                preconditionFailure("A type's alignment is a power of two")
+            }
+        }
+    }
+
     extension Memory.Inline: @unchecked Sendable {}
 #endif
